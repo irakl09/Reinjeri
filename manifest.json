@@ -1,1 +1,21 @@
-
+{
+  "name": "ვასოს განრიგი",
+  "short_name": "ვასოს განრიგი",
+  "description": "ვასოს განრიგი",
+  "start_url": "https://irakl09.github.io/-/", 
+  "display": "standalone",
+  "background_color": "#FFFFFF",  
+  "theme_color": "#0737a0",
+  "icons": [
+    {
+      "src": "j.jpg",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "j.jpg",
+      "sizes": "512x512",
+      "type": "image/jpg"
+    }
+  ]
+}
