@@ -1,21 +1,20 @@
 {
-  "name": "ვასოს განრიგი",
+  "name": "რეინჯერის განრიგი",
   "short_name": "ვასოს განრიგი",
-  "description": "ვასოს განრიგი",
-  "start_url": "https://irakl09.github.io/-/", 
+  "start_url": "./",
   "display": "standalone",
-  "background_color": "#FFFFFF",  
-  "theme_color": "#0737a0",
+  "background_color": "#FFFFFF",
+  "theme_color": "#00008b",
   "icons": [
     {
-      "src": "j.jpg",
-      "sizes": "192x192",
-      "type": "image/png"
+      "src": "logo.gpj", 
+      "sizes": "192x192", 
+      "type": "image/gpj"
     },
     {
-      "src": "j.jpg",
-      "sizes": "512x512",
-      "type": "image/jpg"
+      "src": "logo.gpj", 
+      "sizes": "512x512", 
+      "type": "image/gpj"
     }
   ]
 }
