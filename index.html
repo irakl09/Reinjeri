@@ -6,7 +6,7 @@
     <title>რეინჯერის განრიგი</title>
     
     <!-- Favicon linking -->
-    <link rel="icon" href="j.png" type="image/png">  <!-- შეცვალეთ ფაილის ფორმატი PNG-თ, თუ ეს იყო პრობლემა -->
+    <link rel="icon" href="j.gpj" type="image/gpj">
     
     <!-- Web App Manifest linking -->
     <link rel="manifest" href="manifest.json">
@@ -88,86 +88,106 @@
         <div id="calendar"></div>
     </div>
 
-<script>
-    function generateCalendar() {
-        const calendarContainer = document.getElementById("calendar");
-        const messageContainer = document.getElementById("message");
-        const startDate = new Date("2024-12-03");
-        const endDate = new Date("2025-12-31");
+    <script>
+        // JSON მონაცემების ქეშირება
+        const CACHE_NAME = 'reinjeri-cache-v1';
+        const urlsToCache = [
+          '/',
+          '/index.html',
+          '/styles.css',
+          '/app.js',
+          '/manifest.json',
+          '/icon.png',
+          '/j.gpj',
+        ];
 
-        const months = ["იან", "თებ", "მარტ", "აპრ", "მაი", "ივნ", "ივლ", "აგვ", "სექ", "ოქტ", "ნოე", "დეკ"];
-        const weekdays = ["კვი", "ორ", "სამ", "ოთხ", "ხუთ", "პარ", "შაბ"];
-
-        let currentDate = startDate;
-        let dayCount = 0;
-
-        while (currentDate <= endDate) {
-            const dateCell = document.createElement("div");
-            dateCell.classList.add("date-cell");
-
-            // 6 დღე თეთრი და 6 დღე მწვანე
-            if (Math.floor(dayCount / 6) % 2 === 0) {
-                dateCell.classList.add("white");
-            } else {
-                dateCell.classList.add("green");
-            }
-
-            const day = currentDate.getDate();
-            const month = months[currentDate.getMonth()];
-            const weekday = weekdays[currentDate.getDay()];
-
-            dateCell.innerText = `${day} ${month} (${weekday})`;
-
-            // წარსული თარიღები
-            const currentDateObj = new Date();
-            if (currentDate < currentDateObj) {
-                if (dateCell.classList.contains("green")) {
-                    dateCell.classList.remove("green");
-                    dateCell.classList.add("past-green");
-                } else if (dateCell.classList.contains("white")) {
-                    dateCell.classList.remove("white");
-                    dateCell.classList.add("past-white");
-                }
-            }
-
-            calendarContainer.appendChild(dateCell);
-            currentDate.setDate(currentDate.getDate() + 1);
-            dayCount++;
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/service-worker.js').then((registration) => {
+            console.log('Service Worker რეგისტრირებულია', registration);
+          }).catch((error) => {
+            console.log('Service Worker რეგისტრაცია ვერ მოხერხდა', error);
+          });
         }
 
-        updateTomorrowMessage();
+        function generateCalendar() {
+            const calendarContainer = document.getElementById("calendar");
+            const messageContainer = document.getElementById("message");
+            const startDate = new Date("2024-12-03");
+            const endDate = new Date("2025-12-31");
 
-        // განახლება ყოველდღიურად
-        setInterval(updateTomorrowMessage, 86400000);
+            const months = ["იან", "თებ", "მარტ", "აპრ", "მაი", "ივნ", "ივლ", "აგვ", "სექ", "ოქტ", "ნოე", "დეკ"];
+            const weekdays = ["კვი", "ორ", "სამ", "ოთხ", "ხუთ", "პარ", "შაბ"];
 
-        function updateTomorrowMessage() {
-            const now = new Date();
-            const tomorrow = new Date();
-            tomorrow.setDate(now.getDate() + 1);
+            let currentDate = startDate;
+            let dayCount = 0;
 
-            const allCells = calendarContainer.getElementsByClassName("date-cell");
-            for (const cell of allCells) {
-                const cellDateText = cell.innerText;
-                const cellDay = parseInt(cellDateText.split(' ')[0]);
-                const cellMonth = months.indexOf(cellDateText.split(' ')[1]);
-                const cellYear = now.getFullYear(); // Assume the current year
+            while (currentDate <= endDate) {
+                const dateCell = document.createElement("div");
+                dateCell.classList.add("date-cell");
 
-                if (
-                    tomorrow.getDate() === cellDay &&
-                    tomorrow.getMonth() === cellMonth &&
-                    tomorrow.getFullYear() === cellYear
-                ) {
-                    if (cell.classList.contains("green")) {
-                        messageContainer.innerHTML = "ხვალ მუშაობ 😱";
-                    } else if (cell.classList.contains("white")) {
-                        messageContainer.innerHTML = "ხვალ არ მუშაობ 😍🥳";
+                // 6 დღე თეთრი და 6 დღე მწვანე
+                if (Math.floor(dayCount / 6) % 2 === 0) {
+                    dateCell.classList.add("white");
+                } else {
+                    dateCell.classList.add("green");
+                }
+
+                const day = currentDate.getDate();
+                const month = months[currentDate.getMonth()];
+                const weekday = weekdays[currentDate.getDay()];
+
+                dateCell.innerText = `${day} ${month} (${weekday})`;
+
+                // წარსული თარიღები
+                const currentDateObj = new Date();
+                if (currentDate < currentDateObj) {
+                    if (dateCell.classList.contains("green")) {
+                        dateCell.classList.remove("green");
+                        dateCell.classList.add("past-green");
+                    } else if (dateCell.classList.contains("white")) {
+                        dateCell.classList.remove("white");
+                        dateCell.classList.add("past-white");
+                    }
+                }
+
+                calendarContainer.appendChild(dateCell);
+                currentDate.setDate(currentDate.getDate() + 1);
+                dayCount++;
+            }
+
+            updateTomorrowMessage();
+
+            // განახლება ყოველდღიურად
+            setInterval(updateTomorrowMessage, 86400000);
+
+            function updateTomorrowMessage() {
+                const now = new Date();
+                const tomorrow = new Date();
+                tomorrow.setDate(now.getDate() + 1);
+
+                const allCells = calendarContainer.getElementsByClassName("date-cell");
+                for (const cell of allCells) {
+                    const cellDateText = cell.innerText;
+                    const cellDay = parseInt(cellDateText.split(' ')[0]);
+                    const cellMonth = months.indexOf(cellDateText.split(' ')[1]);
+                    const cellYear = now.getFullYear(); // Assume the current year
+
+                    if (
+                        tomorrow.getDate() === cellDay &&
+                        tomorrow.getMonth() === cellMonth &&
+                        tomorrow.getFullYear() === cellYear
+                    ) {
+                        if (cell.classList.contains("green")) {
+                            messageContainer.innerHTML = "ხვალ მუშაობ 😱";
+                        } else if (cell.classList.contains("white")) {
+                            messageContainer.innerHTML = "ხვალ არ მუშაობ 😍🥳";
+                        }
                     }
                 }
             }
         }
-    }
 
-    generateCalendar();
-</script>
+        generateCalendar();
+    </script>
 </body>
 </html>
