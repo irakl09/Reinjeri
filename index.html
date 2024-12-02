@@ -6,10 +6,10 @@
     <title>რეინჯერის განრიგი</title>
     
     <!-- Favicon linking -->
-    <link rel="icon" href="j.png" type="image/png">  <!-- შეცვლილი ფაილის ტიპი PNG-ით -->
+    <link rel="icon" href="https://irakl09.github.io/Reinjeri/j.png" type="image/png">  <!-- URL მითითება -->
 
     <!-- Web App Manifest linking -->
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="https://irakl09.github.io/Reinjeri/manifest.json">
 
     <style>
         body {
@@ -21,10 +21,10 @@
         }
 
         h1 {
-            font-size: 12px; /* 12px ზომის ტექსტი */
-            color: #00008b; /* მუქი ლურჯი ფერი */
-            text-align: right; /* მარჯვნივ გასწორება */
-            margin: 20px 20px 20px 50px; /* მარცხნივ სივრცის დამატება */
+            font-size: 12px;
+            color: #00008b;
+            text-align: right;
+            margin: 20px 20px 20px 50px;
         }
 
         .calendar {
@@ -38,14 +38,14 @@
             top: 20px;
             left: 20px;
             margin: 0;
-            font-size: 18px; /* 18px ზომის ტექსტი */
+            font-size: 18px;
             font-weight: bold;
-            color: black; /* შავი ფერი */
-            text-align: left; /* მარცხნივ გასწორება */
-            border: 2px solid black; /* ჩარჩო */
-            padding: 10px; /* სივრცე ჩარჩოს შიგნით */
-            display: inline-block; /* ტექსტი ჩარჩოში */
-            border-radius: 8px; /* ოვალური კუთხეები */
+            color: black;
+            text-align: left;
+            border: 2px solid black;
+            padding: 10px;
+            display: inline-block;
+            border-radius: 8px;
         }
 
         #calendar {
@@ -84,7 +84,7 @@
 <body>
     <h1>რეინჯერის განრიგი</h1>
     <div class="calendar">
-        <div id="message"></div> <!-- ტექსტი კალენდრის თავში -->
+        <div id="message"></div>
         <div id="calendar"></div>
     </div>
 
@@ -105,7 +105,6 @@
             const dateCell = document.createElement("div");
             dateCell.classList.add("date-cell");
 
-            // 6 დღე მწვანე და 6 დღე თეთრი
             if (Math.floor(dayCount / 6) % 2 === 0) {
                 dateCell.classList.add("green");
             } else {
@@ -118,7 +117,6 @@
 
             dateCell.innerText = `${day} ${month} (${weekday})`;
 
-            // წარსული თარიღები
             const currentDateObj = new Date();
             if (currentDate < currentDateObj) {
                 if (dateCell.classList.contains("green")) {
@@ -137,7 +135,6 @@
 
         updateTomorrowMessage();
 
-        // განახლება ყოველდღიურად
         setInterval(updateTomorrowMessage, 86400000);
 
         function updateTomorrowMessage() {
@@ -150,7 +147,7 @@
                 const cellDateText = cell.innerText;
                 const cellDay = parseInt(cellDateText.split(' ')[0]);
                 const cellMonth = months.indexOf(cellDateText.split(' ')[1]);
-                const cellYear = now.getFullYear(); // Assume the current year
+                const cellYear = now.getFullYear();
 
                 if (
                     tomorrow.getDate() === cellDay &&
