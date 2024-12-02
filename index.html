@@ -61,13 +61,13 @@
         }
 
         .green {
-            background-color: green;
-            color: white;
+            background-color: white;  /* თეთრი */
+            color: black;
         }
 
         .white {
-            background-color: white;
-            color: black;
+            background-color: green;  /* მწვანე */
+            color: white;
         }
 
         .past-green {
@@ -105,10 +105,11 @@
             const dateCell = document.createElement("div");
             dateCell.classList.add("date-cell");
 
+            // 6 დღე თეთრი და 6 დღე მწვანე
             if (Math.floor(dayCount / 6) % 2 === 0) {
-                dateCell.classList.add("green");
-            } else {
                 dateCell.classList.add("white");
+            } else {
+                dateCell.classList.add("green");
             }
 
             const day = currentDate.getDate();
@@ -119,12 +120,12 @@
 
             const currentDateObj = new Date();
             if (currentDate < currentDateObj) {
-                if (dateCell.classList.contains("green")) {
-                    dateCell.classList.remove("green");
-                    dateCell.classList.add("past-green");
-                } else if (dateCell.classList.contains("white")) {
+                if (dateCell.classList.contains("white")) {
                     dateCell.classList.remove("white");
                     dateCell.classList.add("past-white");
+                } else if (dateCell.classList.contains("green")) {
+                    dateCell.classList.remove("green");
+                    dateCell.classList.add("past-green");
                 }
             }
 
@@ -154,9 +155,9 @@
                     tomorrow.getMonth() === cellMonth &&
                     tomorrow.getFullYear() === cellYear
                 ) {
-                    if (cell.classList.contains("green")) {
+                    if (cell.classList.contains("white")) {
                         messageContainer.innerHTML = "ხვალ მუშაობ 😱";
-                    } else if (cell.classList.contains("white")) {
+                    } else if (cell.classList.contains("green")) {
                         messageContainer.innerHTML = "ხვალ არ მუშაობ 😍🥳";
                     }
                 }
