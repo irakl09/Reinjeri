@@ -1,14 +1,14 @@
 {
-  "short_name": "ვასოს განრიგი",
-  "name": "რეინჯერის სამუშაო განრიგი",
+  "short_name": "რეინჯერის განრიგი",
+  "name": "ვასოს სამუშაო განრიგი",
   "icons": [
     {
-      "src": "j.png",  
+      "src": "https://irakl09.github.io/Reinjeri/j.png",  <!-- URL მითითება -->
       "sizes": "512x512",
       "type": "image/png"
     }
   ],
-  "start_url": "/",
+  "start_url": "https://irakl09.github.io/Reinjeri/",
   "display": "standalone",
   "background_color": "#FFFFFF",
   "theme_color": "#00008b"
