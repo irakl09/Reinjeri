@@ -105,11 +105,11 @@
             const dateCell = document.createElement("div");
             dateCell.classList.add("date-cell");
 
-            // 6 დღე მწვანე და 6 დღე თეთრი
+            // 6 დღე თეთრი და 6 დღე მწვანე
             if (Math.floor(dayCount / 6) % 2 === 0) {
-                dateCell.classList.add("green");
-            } else {
                 dateCell.classList.add("white");
+            } else {
+                dateCell.classList.add("green");
             }
 
             const day = currentDate.getDate();
