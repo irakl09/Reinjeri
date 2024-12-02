@@ -1,0 +1,20 @@
+{
+  "name": "რეინჯერის განრიგი",
+  "short_name": "ვასოს განრიგი განრიგი",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#00008b",
+  "icons": [
+    {
+      "src": "j.gpj", 
+      "sizes": "192x192", 
+      "type": "image/gpj"
+    },
+    {
+      "src": "j.gpj", 
+      "sizes": "512x512", 
+      "type": "image/gpj"
+    }
+  ]
+}
