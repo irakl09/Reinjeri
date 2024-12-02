@@ -6,10 +6,10 @@
     <title>რეინჯერის განრიგი</title>
     
     <!-- Favicon linking -->
-    <link rel="icon" href="https://irakl09.github.io/Reinjeri/j.png" type="image/png">  <!-- URL მითითება -->
-
+    <link rel="icon" href="j.png" type="image/png">  <!-- შეცვალეთ ფაილის ფორმატი PNG-თ, თუ ეს იყო პრობლემა -->
+    
     <!-- Web App Manifest linking -->
-    <link rel="manifest" href="https://irakl09.github.io/Reinjeri/manifest.json">
+    <link rel="manifest" href="manifest.json">
 
     <style>
         body {
@@ -21,10 +21,10 @@
         }
 
         h1 {
-            font-size: 12px;
-            color: #00008b;
-            text-align: right;
-            margin: 20px 20px 20px 50px;
+            font-size: 12px; /* 12px ზომის ტექსტი */
+            color: #00008b; /* მუქი ლურჯი ფერი */
+            text-align: right; /* მარჯვნივ გასწორება */
+            margin: 20px 20px 20px 50px; /* მარცხნივ სივრცის დამატება */
         }
 
         .calendar {
@@ -38,14 +38,14 @@
             top: 20px;
             left: 20px;
             margin: 0;
-            font-size: 18px;
+            font-size: 18px; /* 18px ზომის ტექსტი */
             font-weight: bold;
-            color: black;
-            text-align: left;
-            border: 2px solid black;
-            padding: 10px;
-            display: inline-block;
-            border-radius: 8px;
+            color: black; /* შავი ფერი */
+            text-align: left; /* მარცხნივ გასწორება */
+            border: 2px solid black; /* ჩარჩო */
+            padding: 10px; /* სივრცე ჩარჩოს შიგნით */
+            display: inline-block; /* ტექსტი ჩარჩოში */
+            border-radius: 8px; /* ოვალური კუთხეები */
         }
 
         #calendar {
@@ -61,13 +61,13 @@
         }
 
         .green {
-            background-color: white;  /* თეთრი */
-            color: black;
+            background-color: green;
+            color: white;
         }
 
         .white {
-            background-color: green;  /* მწვანე */
-            color: white;
+            background-color: white;
+            color: black;
         }
 
         .past-green {
@@ -84,7 +84,7 @@
 <body>
     <h1>რეინჯერის განრიგი</h1>
     <div class="calendar">
-        <div id="message"></div>
+        <div id="message"></div> <!-- ტექსტი კალენდრის თავში -->
         <div id="calendar"></div>
     </div>
 
@@ -118,14 +118,15 @@
 
             dateCell.innerText = `${day} ${month} (${weekday})`;
 
+            // წარსული თარიღები
             const currentDateObj = new Date();
             if (currentDate < currentDateObj) {
-                if (dateCell.classList.contains("white")) {
-                    dateCell.classList.remove("white");
-                    dateCell.classList.add("past-white");
-                } else if (dateCell.classList.contains("green")) {
+                if (dateCell.classList.contains("green")) {
                     dateCell.classList.remove("green");
                     dateCell.classList.add("past-green");
+                } else if (dateCell.classList.contains("white")) {
+                    dateCell.classList.remove("white");
+                    dateCell.classList.add("past-white");
                 }
             }
 
@@ -136,6 +137,7 @@
 
         updateTomorrowMessage();
 
+        // განახლება ყოველდღიურად
         setInterval(updateTomorrowMessage, 86400000);
 
         function updateTomorrowMessage() {
@@ -148,16 +150,16 @@
                 const cellDateText = cell.innerText;
                 const cellDay = parseInt(cellDateText.split(' ')[0]);
                 const cellMonth = months.indexOf(cellDateText.split(' ')[1]);
-                const cellYear = now.getFullYear();
+                const cellYear = now.getFullYear(); // Assume the current year
 
                 if (
                     tomorrow.getDate() === cellDay &&
                     tomorrow.getMonth() === cellMonth &&
                     tomorrow.getFullYear() === cellYear
                 ) {
-                    if (cell.classList.contains("white")) {
+                    if (cell.classList.contains("green")) {
                         messageContainer.innerHTML = "ხვალ მუშაობ 😱";
-                    } else if (cell.classList.contains("green")) {
+                    } else if (cell.classList.contains("white")) {
                         messageContainer.innerHTML = "ხვალ არ მუშაობ 😍🥳";
                     }
                 }
