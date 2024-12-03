@@ -139,39 +139,21 @@
                     }
                 }
 
+                // Check if it's tomorrow
+                const cellDate = new Date(currentDate); // Create a new date for the current cell
+                cellDate.setHours(0, 0, 0, 0);  // Reset time to midnight
+
+                if (cellDate.getTime() === tomorrow.getTime()) {
+                    if (dateCell.classList.contains("green")) {
+                        messageContainer.innerHTML = "ხვალ მუშაობ 😱";
+                    } else if (dateCell.classList.contains("white")) {
+                        messageContainer.innerHTML = "ხვალ არ მუშაობ 😍🥳";
+                    }
+                }
+
                 calendarContainer.appendChild(dateCell);
                 currentDate.setDate(currentDate.getDate() + 1);
                 dayCount++;
-            }
-
-            // განახლება ხვალინდელი შეტყობინების მიხედვით
-            updateTomorrowMessage();
-
-            setInterval(updateTomorrowMessage, 86400000);  // refresh every 24 hours
-
-            function updateTomorrowMessage() {
-                const allCells = calendarContainer.getElementsByClassName("date-cell");
-
-                for (const cell of allCells) {
-                    const cellDateText = cell.innerText;
-                    const cellDay = parseInt(cellDateText.split(' ')[0]);
-                    const cellMonth = months.indexOf(cellDateText.split(' ')[1]);
-                    const cellYear = today.getFullYear(); // Assume the current year
-
-                    // Create the full date object from the cell
-                    const cellDate = new Date(cellYear, cellMonth, cellDay);
-                    cellDate.setHours(0, 0, 0, 0);  // reset time to compare date only
-
-                    // Check if the cell corresponds to tomorrow
-                    if (cellDate.getTime() === tomorrow.getTime()) {
-                        // Now check the color of the cell (green or white)
-                        if (cell.classList.contains("green")) {
-                            messageContainer.innerHTML = "ხვალ მუშაობ 😱";
-                        } else if (cell.classList.contains("white")) {
-                            messageContainer.innerHTML = "ხვალ არ მუშაობ 😍🥳";
-                        }
-                    }
-                }
             }
         }
 
