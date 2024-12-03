@@ -28,6 +28,20 @@
         .date-cell {
             padding: 10px;
             border: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .weekday-row {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .weekday {
+            padding: 5px;
+            text-align: center;
+            background-color: #f0f0f0;
+            font-weight: bold;
         }
 
         .green {
@@ -48,6 +62,7 @@
 
     <script>
         const months = ["იან", "თებ", "მარტ", "აპრ", "მაი", "ივნ", "ივლ", "აგვ", "სექ", "ოქტ", "ნოე", "დეკ"];
+        const weekdays = ["კვი", "ორშ", "სამ", "ოთხ", "ხუთ", "პარ", "შაბ"];
 
         function generateCalendar() {
             const calendarContainer = document.getElementById("calendar");
@@ -56,6 +71,17 @@
 
             let currentDate = startDate;
             let dayCount = 0;
+
+            // პირველი კვირა
+            const weekdayRow = document.createElement("div");
+            weekdayRow.classList.add("weekday-row");
+            weekdays.forEach(day => {
+                const dayCell = document.createElement("div");
+                dayCell.classList.add("weekday");
+                dayCell.innerText = day;
+                weekdayRow.appendChild(dayCell);
+            });
+            calendarContainer.appendChild(weekdayRow);
 
             while (currentDate <= endDate) {
                 const dateCell = document.createElement("div");
@@ -70,7 +96,10 @@
 
                 const day = currentDate.getDate();
                 const month = months[currentDate.getMonth()];
-                dateCell.innerText = `${day} ${month}`;
+                const weekday = weekdays[currentDate.getDay()];
+
+                // თარიღის ფორმატირება (მაგ: 3 დეკ - სამ)
+                dateCell.innerText = `${day} ${month} - ${weekday}`;
 
                 calendarContainer.appendChild(dateCell);
                 currentDate.setDate(currentDate.getDate() + 1);
