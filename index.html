@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>რეინჯერის განრიგი</title>
     
-    <!-- Favicon linking -->
     <link rel="icon" href="j.gpj" type="image/gpj">
-    
-    <!-- Web App Manifest linking -->
     <link rel="manifest" href="manifest.json">
 
     <style>
@@ -23,8 +20,8 @@
         h1 {
             font-size: 10px; /* დაპატარავებული ტექსტი */
             color: #00008b;
-            text-align: right; /* ტექსტი მარჯვნივ გასწორებული */
-            margin: 10px 10px 0 0; /* მარჯვენა ზღვარი */
+            text-align: right;
+            margin: 10px 10px 0 0;
         }
 
         .calendar {
@@ -38,7 +35,7 @@
             top: 20px;
             left: 20px;
             margin: 0;
-            font-size: 18px;
+            font-size: 12px; /* დაპატარავებული ტექსტი */
             font-weight: bold;
             color: black;
             text-align: left;
@@ -101,12 +98,10 @@
 
             let dayCount = 0;
 
-            // დღევანდელი თარიღი
             const today = new Date();
             const tomorrow = new Date(today);
             tomorrow.setDate(today.getDate() + 1);
 
-            // გამორთული დრო (მხოლოდ თარიღები)
             today.setHours(0, 0, 0, 0);
             tomorrow.setHours(0, 0, 0, 0);
 
@@ -114,7 +109,6 @@
                 const dateCell = document.createElement("div");
                 dateCell.classList.add("date-cell");
 
-                // 6 დღე თეთრი და 6 დღე მწვანე
                 if (Math.floor(dayCount / 6) % 2 === 0) {
                     dateCell.classList.add("white");
                 } else {
@@ -127,7 +121,6 @@
 
                 dateCell.innerText = `${day} ${month} (${weekday})`;
 
-                // წარსული თარიღები
                 const currentDateObj = new Date();
                 if (currentDate < currentDateObj) {
                     if (dateCell.classList.contains("green")) {
@@ -139,9 +132,8 @@
                     }
                 }
 
-                // Check if it's tomorrow
-                const cellDate = new Date(currentDate); // Create a new date for the current cell
-                cellDate.setHours(0, 0, 0, 0);  // Reset time to midnight
+                const cellDate = new Date(currentDate);
+                cellDate.setHours(0, 0, 0, 0);
 
                 if (cellDate.getTime() === tomorrow.getTime()) {
                     if (dateCell.classList.contains("green")) {
