@@ -89,37 +89,22 @@
     </div>
 
     <script>
-        // JSON მონაცემების ქეშირება
-        const CACHE_NAME = 'reinjeri-cache-v1';
-        const urlsToCache = [
-          '/',
-          '/index.html',
-          '/styles.css',
-          '/app.js',
-          '/manifest.json',
-          '/icon.png',
-          '/j.gpj',
-        ];
-
-        if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.register('/service-worker.js').then((registration) => {
-            console.log('Service Worker რეგისტრირებულია', registration);
-          }).catch((error) => {
-            console.log('Service Worker რეგისტრაცია ვერ მოხერხდა', error);
-          });
-        }
-
         function generateCalendar() {
             const calendarContainer = document.getElementById("calendar");
             const messageContainer = document.getElementById("message");
-            const startDate = new Date("2024-12-03");
-            const endDate = new Date("2025-12-31");
 
             const months = ["იან", "თებ", "მარტ", "აპრ", "მაი", "ივნ", "ივლ", "აგვ", "სექ", "ოქტ", "ნოე", "დეკ"];
             const weekdays = ["კვი", "ორ", "სამ", "ოთხ", "ხუთ", "პარ", "შაბ"];
 
-            let currentDate = startDate;
+            let currentDate = new Date("2024-12-03");
+            const endDate = new Date("2025-12-31");
+
             let dayCount = 0;
+
+            // დღევანდელი თარიღის მიღება
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(today.getDate() + 1);
 
             while (currentDate <= endDate) {
                 const dateCell = document.createElement("div");
@@ -155,30 +140,27 @@
                 dayCount++;
             }
 
+            // განახლება ხვალინდელი შეტყობინების მიხედვით
             updateTomorrowMessage();
 
-            // განახლება ყოველდღიურად
             setInterval(updateTomorrowMessage, 86400000);
 
             function updateTomorrowMessage() {
-                const now = new Date();
-                const tomorrow = new Date();
-                tomorrow.setDate(now.getDate() + 1);
-
                 const allCells = calendarContainer.getElementsByClassName("date-cell");
+
+                // ხელახლა დავამატოთ ტესტი, რომ რიცხვი გადამოწმდეს სწორად
                 for (const cell of allCells) {
                     const cellDateText = cell.innerText;
                     const cellDay = parseInt(cellDateText.split(' ')[0]);
                     const cellMonth = months.indexOf(cellDateText.split(' ')[1]);
-                    const cellYear = now.getFullYear();
+                    const cellYear = today.getFullYear(); // Assume the current year
 
-                    // Checking if the cell corresponds to tomorrow
                     if (
                         tomorrow.getDate() === cellDay &&
                         tomorrow.getMonth() === cellMonth &&
                         tomorrow.getFullYear() === cellYear
                     ) {
-                        // Check the background color of the cell to decide the message
+                        // ახლა შევამოწმებთ რა ფერია უჯრა
                         if (cell.classList.contains("green")) {
                             messageContainer.innerHTML = "ხვალ მუშაობ 😱";
                         } else if (cell.classList.contains("white")) {
