@@ -21,10 +21,10 @@
         }
 
         h1 {
-            font-size: 12px; /* 12px ზომის ტექსტი */
-            color: #00008b; /* მუქი ლურჯი ფერი */
-            text-align: right; /* მარჯვნივ გასწორება */
-            margin: 20px 20px 20px 50px; /* მარცხნივ სივრცის დამატება */
+            font-size: 12px;
+            color: #00008b;
+            text-align: right;
+            margin: 20px 20px 20px 50px;
         }
 
         .calendar {
@@ -38,14 +38,14 @@
             top: 20px;
             left: 20px;
             margin: 0;
-            font-size: 18px; /* 18px ზომის ტექსტი */
+            font-size: 18px;
             font-weight: bold;
-            color: black; /* შავი ფერი */
-            text-align: left; /* მარცხნივ გასწორება */
-            border: 2px solid black; /* ჩარჩო */
-            padding: 10px; /* სივრცე ჩარჩოს შიგნით */
-            display: inline-block; /* ტექსტი ჩარჩოში */
-            border-radius: 8px; /* ოვალური კუთხეები */
+            color: black;
+            text-align: left;
+            border: 2px solid black;
+            padding: 10px;
+            display: inline-block;
+            border-radius: 8px;
         }
 
         #calendar {
@@ -89,6 +89,26 @@
     </div>
 
     <script>
+        // JSON მონაცემების ქეშირება
+        const CACHE_NAME = 'reinjeri-cache-v1';
+        const urlsToCache = [
+          '/',
+          '/index.html',
+          '/styles.css',
+          '/app.js',
+          '/manifest.json',
+          '/icon.png',
+          '/j.gpj',
+        ];
+
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('/service-worker.js').then((registration) => {
+            console.log('Service Worker რეგისტრირებულია', registration);
+          }).catch((error) => {
+            console.log('Service Worker რეგისტრაცია ვერ მოხერხდა', error);
+          });
+        }
+
         function generateCalendar() {
             const calendarContainer = document.getElementById("calendar");
             const messageContainer = document.getElementById("message");
@@ -152,13 +172,13 @@
                     const cellMonth = months.indexOf(cellDateText.split(' ')[1]);
                     const cellYear = now.getFullYear(); // Assume the current year
 
-                    // Correct comparison to check if tomorrow's date is found
+                    // Checking if the cell corresponds to tomorrow
                     if (
                         tomorrow.getDate() === cellDay &&
                         tomorrow.getMonth() === cellMonth &&
                         tomorrow.getFullYear() === cellYear
                     ) {
-                        // Ensure we check the correct class (green or white) for tomorrow
+                        // Check the background color of the cell to decide the message
                         if (cell.classList.contains("green")) {
                             messageContainer.innerHTML = "ხვალ მუშაობ 😱";
                         } else if (cell.classList.contains("white")) {
