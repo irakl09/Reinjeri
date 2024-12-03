@@ -84,7 +84,7 @@
 <body>
     <h1>რეინჯერის განრიგი</h1>
     <div class="calendar">
-        <div id="message"></div> <!-- ტექსტი კალენდრის თავში -->
+        <div id="message"></div>
         <div id="calendar"></div>
     </div>
 
@@ -170,7 +170,7 @@
                     const cellDateText = cell.innerText;
                     const cellDay = parseInt(cellDateText.split(' ')[0]);
                     const cellMonth = months.indexOf(cellDateText.split(' ')[1]);
-                    const cellYear = now.getFullYear(); // Assume the current year
+                    const cellYear = now.getFullYear();
 
                     // Checking if the cell corresponds to tomorrow
                     if (
