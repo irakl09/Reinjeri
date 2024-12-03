@@ -170,17 +170,20 @@
                     const cellDateText = cell.innerText;
                     const cellDay = parseInt(cellDateText.split(' ')[0]);
                     const cellMonth = months.indexOf(cellDateText.split(' ')[1]);
-                    const cellYear = now.getFullYear(); // Assume the current year
+
+                    const cellDate = new Date(now.getFullYear(), cellMonth, cellDay);
 
                     if (
-                        tomorrow.getDate() === cellDay &&
-                        tomorrow.getMonth() === cellMonth &&
-                        tomorrow.getFullYear() === cellYear
+                        tomorrow.getDate() === cellDate.getDate() &&
+                        tomorrow.getMonth() === cellDate.getMonth() &&
+                        tomorrow.getFullYear() === cellDate.getFullYear()
                     ) {
                         if (cell.classList.contains("green")) {
                             messageContainer.innerHTML = "ხვალ მუშაობ 😱";
+                            messageContainer.style.color = "green";
                         } else if (cell.classList.contains("white")) {
                             messageContainer.innerHTML = "ხვალ არ მუშაობ 😍🥳";
+                            messageContainer.style.color = "black";
                         }
                     }
                 }
@@ -190,4 +193,4 @@
         generateCalendar();
     </script>
 </body>
-</html> 
+</html>
