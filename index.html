@@ -40,7 +40,6 @@
             margin: 0;
             font-size: 18px; /* 18px ზომის ტექსტი */
             font-weight: bold;
-            color: black; /* შავი ფერი */
             text-align: left; /* მარცხნივ გასწორება */
             border: 2px solid black; /* ჩარჩო */
             padding: 10px; /* სივრცე ჩარჩოს შიგნით */
@@ -178,9 +177,9 @@
                         tomorrow.getFullYear() === cellYear
                     ) {
                         if (cell.classList.contains("green")) {
-                            messageContainer.innerHTML = "ხვალ მუშაობ 😱";
+                            messageContainer.innerHTML = `<span style="color:green;">ხვალ მუშაობ 😱</span>`;
                         } else if (cell.classList.contains("white")) {
-                            messageContainer.innerHTML = "ხვალ არ მუშაობ 😍🥳";
+                            messageContainer.innerHTML = `<span style="color:blue;">ხვალ არ მუშაობ 😍🥳</span>`;
                         }
                     }
                 }
