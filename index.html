@@ -101,7 +101,7 @@
 
             let dayCount = 0;
 
-            // დღევანდელი თარიღის მიღება
+            // დღევანდელი თარიღი
             const today = new Date();
             const tomorrow = new Date(today);
             tomorrow.setDate(today.getDate() + 1);
@@ -147,7 +147,7 @@
             // განახლება ხვალინდელი შეტყობინების მიხედვით
             updateTomorrowMessage();
 
-            setInterval(updateTomorrowMessage, 86400000);
+            setInterval(updateTomorrowMessage, 86400000);  // refresh every 24 hours
 
             function updateTomorrowMessage() {
                 const allCells = calendarContainer.getElementsByClassName("date-cell");
@@ -158,11 +158,13 @@
                     const cellMonth = months.indexOf(cellDateText.split(' ')[1]);
                     const cellYear = today.getFullYear(); // Assume the current year
 
+                    // Create the full date object from the cell
                     const cellDate = new Date(cellYear, cellMonth, cellDay);
-                    cellDate.setHours(0, 0, 0, 0);  // Time reset for comparison
+                    cellDate.setHours(0, 0, 0, 0);  // reset time to compare date only
 
+                    // Check if the cell corresponds to tomorrow
                     if (cellDate.getTime() === tomorrow.getTime()) {
-                        // ახლა შევამოწმებთ რა ფერია უჯრა
+                        // Now check the color of the cell (green or white)
                         if (cell.classList.contains("green")) {
                             messageContainer.innerHTML = "ხვალ მუშაობ 😱";
                         } else if (cell.classList.contains("white")) {
