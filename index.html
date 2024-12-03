@@ -158,10 +158,10 @@
                         tomorrow.getMonth() === cellMonth &&
                         tomorrow.getFullYear() === cellYear
                     ) {
-                        // Check if the next day's cell is "green" or "white"
-                        if (cell.classList.contains("green") && !cell.classList.contains("past-green")) {
+                        // Ensure we check the correct class (green or white) for tomorrow
+                        if (cell.classList.contains("green")) {
                             messageContainer.innerHTML = "ხვალ მუშაობ 😱";
-                        } else if (cell.classList.contains("white") && !cell.classList.contains("past-white")) {
+                        } else if (cell.classList.contains("white")) {
                             messageContainer.innerHTML = "ხვალ არ მუშაობ 😍🥳";
                         }
                     }
