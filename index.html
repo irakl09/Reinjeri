@@ -173,17 +173,18 @@
 
                     const cellDate = new Date(now.getFullYear(), cellMonth, cellDay);
 
+                    // თუ უჯრა არის თეთრი და ეს არის ხვალინდელი, მაშინ დაწეროს "ხვალ არ მუშაობ"
                     if (
                         tomorrow.getDate() === cellDate.getDate() &&
                         tomorrow.getMonth() === cellDate.getMonth() &&
                         tomorrow.getFullYear() === cellDate.getFullYear()
                     ) {
-                        if (cell.classList.contains("green")) {
-                            messageContainer.innerHTML = "ხვალ მუშაობ 😱";
-                            messageContainer.style.color = "green";
-                        } else if (cell.classList.contains("white")) {
+                        if (cell.classList.contains("white")) {
                             messageContainer.innerHTML = "ხვალ არ მუშაობ 😍🥳";
-                            messageContainer.style.color = "black";
+                            messageContainer.style.color = "black"; // შავი ფერი
+                        } else if (cell.classList.contains("green")) {
+                            messageContainer.innerHTML = "ხვალ მუშაობ 😱";
+                            messageContainer.style.color = "green"; // მწვანე ფერი
                         }
                     }
                 }
