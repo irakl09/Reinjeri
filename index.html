@@ -4,48 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>რეინჯერის განრიგი</title>
-    
-    <!-- Favicon linking -->
-    <link rel="icon" href="j.gpj" type="image/gpj">
-    
-    <!-- Web App Manifest linking -->
-    <link rel="manifest" href="manifest.json">
-
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background: linear-gradient(to bottom, #FFFFFF, blue, pink);
             margin: 0;
             padding: 0;
         }
 
-        h1 {
-            font-size: 12px; /* 12px ზომის ტექსტი */
-            color: #00008b; /* მუქი ლურჯი ფერი */
-            text-align: right; /* მარჯვნივ გასწორება */
-            margin: 20px 20px 20px 50px; /* მარცხნივ სივრცის დამატება */
-        }
-
-        .calendar {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
         #message {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            margin: 0;
-            font-size: 18px; /* 18px ზომის ტექსტი */
+            font-size: 18px;
             font-weight: bold;
-            color: black; /* შავი ფერი */
-            text-align: left; /* მარცხნივ გასწორება */
-            border: 2px solid black; /* ჩარჩო */
-            padding: 10px; /* სივრცე ჩარჩოს შიგნით */
-            display: inline-block; /* ტექსტი ჩარჩოში */
-            border-radius: 8px; /* ოვალური კუთხეები */
+            margin: 20px;
+            padding: 10px;
         }
 
         #calendar {
@@ -55,9 +26,8 @@
         }
 
         .date-cell {
-            border: 1px solid #ccc;
             padding: 10px;
-            text-align: center;
+            border: 1px solid #ccc;
         }
 
         .green {
@@ -69,54 +39,20 @@
             background-color: white;
             color: black;
         }
-
-        .past-green {
-            background-color: red;
-            color: white;
-        }
-
-        .past-white {
-            background-color: yellow;
-            color: black;
-        }
     </style>
 </head>
 <body>
     <h1>რეინჯერის განრიგი</h1>
-    <div class="calendar">
-        <div id="message"></div> <!-- ტექსტი კალენდრის თავში -->
-        <div id="calendar"></div>
-    </div>
+    <div id="message">...</div>
+    <div id="calendar"></div>
 
     <script>
-        // JSON მონაცემების ქეშირება
-        const CACHE_NAME = 'reinjeri-cache-v1';
-        const urlsToCache = [
-          '/',
-          '/index.html',
-          '/styles.css',
-          '/app.js',
-          '/manifest.json',
-          '/icon.png',
-          '/j.gpj',
-        ];
-
-        if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.register('/service-worker.js').then((registration) => {
-            console.log('Service Worker რეგისტრირებულია', registration);
-          }).catch((error) => {
-            console.log('Service Worker რეგისტრაცია ვერ მოხერხდა', error);
-          });
-        }
+        const months = ["იან", "თებ", "მარტ", "აპრ", "მაი", "ივნ", "ივლ", "აგვ", "სექ", "ოქტ", "ნოე", "დეკ"];
 
         function generateCalendar() {
             const calendarContainer = document.getElementById("calendar");
-            const messageContainer = document.getElementById("message");
             const startDate = new Date("2024-12-03");
             const endDate = new Date("2025-12-31");
-
-            const months = ["იან", "თებ", "მარტ", "აპრ", "მაი", "ივნ", "ივლ", "აგვ", "სექ", "ოქტ", "ნოე", "დეკ"];
-            const weekdays = ["კვი", "ორ", "სამ", "ოთხ", "ხუთ", "პარ", "შაბ"];
 
             let currentDate = startDate;
             let dayCount = 0;
@@ -125,7 +61,7 @@
                 const dateCell = document.createElement("div");
                 dateCell.classList.add("date-cell");
 
-                // 6 დღე თეთრი და 6 დღე მწვანე
+                // ფერის ლოგიკა
                 if (Math.floor(dayCount / 6) % 2 === 0) {
                     dateCell.classList.add("white");
                 } else {
@@ -134,21 +70,7 @@
 
                 const day = currentDate.getDate();
                 const month = months[currentDate.getMonth()];
-                const weekday = weekdays[currentDate.getDay()];
-
-                dateCell.innerText = `${day} ${month} (${weekday})`;
-
-                // წარსული თარიღები
-                const currentDateObj = new Date();
-                if (currentDate < currentDateObj) {
-                    if (dateCell.classList.contains("green")) {
-                        dateCell.classList.remove("green");
-                        dateCell.classList.add("past-green");
-                    } else if (dateCell.classList.contains("white")) {
-                        dateCell.classList.remove("white");
-                        dateCell.classList.add("past-white");
-                    }
-                }
+                dateCell.innerText = `${day} ${month}`;
 
                 calendarContainer.appendChild(dateCell);
                 currentDate.setDate(currentDate.getDate() + 1);
@@ -156,38 +78,41 @@
             }
 
             updateTomorrowMessage();
+        }
 
-            // განახლება ყოველდღიურად
-            setInterval(updateTomorrowMessage, 86400000);
+        function updateTomorrowMessage() {
+            const now = new Date();
+            const tomorrow = new Date();
+            tomorrow.setDate(now.getDate() + 1);
 
-            function updateTomorrowMessage() {
-                const now = new Date();
-                const tomorrow = new Date();
-                tomorrow.setDate(now.getDate() + 1);
+            const calendarContainer = document.getElementById("calendar");
+            const messageContainer = document.getElementById("message");
 
-                const allCells = calendarContainer.getElementsByClassName("date-cell");
-                for (const cell of allCells) {
-                    const cellDateText = cell.innerText;
-                    const cellDay = parseInt(cellDateText.split(' ')[0]);
-                    const cellMonth = months.indexOf(cellDateText.split(' ')[1]);
+            const allCells = calendarContainer.getElementsByClassName("date-cell");
 
-                    const cellDate = new Date(now.getFullYear(), cellMonth, cellDay);
+            let found = false;
 
-                    // თუ უჯრა არის თეთრი და ეს არის ხვალინდელი, მაშინ დაწეროს "ხვალ არ მუშაობ"
-                    if (
-                        tomorrow.getDate() === cellDate.getDate() &&
-                        tomorrow.getMonth() === cellDate.getMonth() &&
-                        tomorrow.getFullYear() === cellDate.getFullYear()
-                    ) {
-                        if (cell.classList.contains("white")) {
-                            messageContainer.innerHTML = "ხვალ არ მუშაობ 😍🥳";
-                            messageContainer.style.color = "black"; // შავი ფერი
-                        } else if (cell.classList.contains("green")) {
-                            messageContainer.innerHTML = "ხვალ მუშაობ 😱";
-                            messageContainer.style.color = "green"; // მწვანე ფერი
-                        }
+            for (const cell of allCells) {
+                const cellText = cell.innerText;
+                const cellDay = parseInt(cellText.split(' ')[0]);
+                const cellMonth = months.indexOf(cellText.split(' ')[1]);
+
+                if (
+                    tomorrow.getDate() === cellDay &&
+                    tomorrow.getMonth() === cellMonth
+                ) {
+                    if (cell.classList.contains("green")) {
+                        messageContainer.innerHTML = `<span style="color:green;">ხვალ მუშაობ 😱</span>`;
+                    } else if (cell.classList.contains("white")) {
+                        messageContainer.innerHTML = `<span style="color:blue;">ხვალ არ მუშაობ 😍🥳</span>`;
                     }
+                    found = true;
+                    break;
                 }
+            }
+
+            if (!found) {
+                messageContainer.innerHTML = "ხვალინდელი თარიღი კალენდარში არ მოიძებნა.";
             }
         }
 
