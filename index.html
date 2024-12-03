@@ -106,6 +106,10 @@
             const tomorrow = new Date(today);
             tomorrow.setDate(today.getDate() + 1);
 
+            // გამორთული დრო (მხოლოდ თარიღები)
+            today.setHours(0, 0, 0, 0);
+            tomorrow.setHours(0, 0, 0, 0);
+
             while (currentDate <= endDate) {
                 const dateCell = document.createElement("div");
                 dateCell.classList.add("date-cell");
@@ -148,18 +152,16 @@
             function updateTomorrowMessage() {
                 const allCells = calendarContainer.getElementsByClassName("date-cell");
 
-                // ხელახლა დავამატოთ ტესტი, რომ რიცხვი გადამოწმდეს სწორად
                 for (const cell of allCells) {
                     const cellDateText = cell.innerText;
                     const cellDay = parseInt(cellDateText.split(' ')[0]);
                     const cellMonth = months.indexOf(cellDateText.split(' ')[1]);
                     const cellYear = today.getFullYear(); // Assume the current year
 
-                    if (
-                        tomorrow.getDate() === cellDay &&
-                        tomorrow.getMonth() === cellMonth &&
-                        tomorrow.getFullYear() === cellYear
-                    ) {
+                    const cellDate = new Date(cellYear, cellMonth, cellDay);
+                    cellDate.setHours(0, 0, 0, 0);  // Time reset for comparison
+
+                    if (cellDate.getTime() === tomorrow.getTime()) {
                         // ახლა შევამოწმებთ რა ფერია უჯრა
                         if (cell.classList.contains("green")) {
                             messageContainer.innerHTML = "ხვალ მუშაობ 😱";
