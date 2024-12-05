@@ -18,7 +18,7 @@
         }
 
         h1 {
-            font-size: 10px; /* დაპატარავებული ტექსტი */
+            font-size: 10px;
             color: #00008b;
             text-align: right;
             margin: 10px 10px 0 0;
@@ -32,10 +32,10 @@
 
         #message {
             position: absolute;
-            top: 20px;
-            left: 20px;
+            top: 0; /* მაქსიმალურად მაღლა */
+            left: 0; /* მაქსიმალურად მარცხნივ */
             margin: 0;
-            font-size: 12px; /* დაპატარავებული ტექსტი */
+            font-size: 12px;
             font-weight: bold;
             color: black;
             text-align: left;
@@ -43,6 +43,7 @@
             padding: 10px;
             display: inline-block;
             border-radius: 8px;
+            background-color: white; /* ხილვადობის გასაუმჯობესებლად */
         }
 
         #calendar {
